@@ -1,0 +1,8 @@
+docker.io/istio/pilot:1.29.4@sha256:b93740f69b0b67abb9e56abf8b28bf53e4f2a410ef93bab25ebed4b05a721bdd
+docker.io/istio/proxyv2:1.29.4@sha256:3c279352793d0c53e0a3561f0329db15dbed63a4dae5c46c391fae7220a31ddf
+docker.io/vllm/vllm-openai:v0.31.0@sha256:c1c9f6fd5c109ba7f0546a59f5b2f15fb87f64c77782e90a27b648b42a8e67c3
+ghcr.io/llm-d/llm-d-router-disagg-sidecar:v1.0.0@sha256:83cdf20199485329baca89b69d78f695735855ed93412aeaeec325d2374ced04
+ghcr.io/llm-d/llm-d-router-endpoint-picker:v1.0.0@sha256:024188e998f516879f68532016ca24fabca00afbdcc2af9a61b17634e197df2c
+nvcr.io/nvidia/ai-dynamo/modelexpress-server:0.5.0@sha256:a48e7085740a1cb594426a914f5ec85029c02e01e692a4b182457b82795644ae
+public.ecr.aws/deep-learning-containers/vllm:0.31.0-gpu-py312-cu130-ubuntu24.04-ec2@sha256:15883a4beb0b734a26cc1bb99296d47e7b2d86bc6330d5194c197ac2bf4a1197
+registry.k8s.io/lws/lws:v1.0.0@sha256:7aa4f6d26609d9f9650054227600337d240181f9d84cb2450474de3bd1e962a9

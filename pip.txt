@@ -1,0 +1,2 @@
+modelexpress==0.5.0
+google-crc32c==1.8.0
