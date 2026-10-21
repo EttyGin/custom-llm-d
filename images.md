@@ -1,6 +1,6 @@
 # Images
 
-Digests resolved with `crane digest` (skopeo is not available in the build environment). Digest = index/manifest-list digest of the tag.
+Digests resolved with `crane digest` (skopeo is not available in the build environment). Digest = index/manifest-list digest of the tag. All are amd64 + arm64 indexes except the AWS DLC image (single amd64 manifest); `lws` also ships ppc64le/s390x.
 
 | image | tag | digest | used by | source |
 |---|---|---|---|---|

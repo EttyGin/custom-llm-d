@@ -14,9 +14,18 @@ Transfer manifest for llm-d v1.0.0 in an air-gapped Kubernetes cluster: Gateway 
 | `images/modelexpress-vllm/` | Dockerfile of the custom vLLM image |
 | `images.txt`, `images.md` | pinned images; table with sources |
 | `repos.md` | git repos to mirror |
-| `pip.txt` | python packages for the custom image |
+| `pip.txt` | python packages for the custom image, hash-pinned to the cp312 manylinux wheels (x86_64 + aarch64) |
 
-Istio CRDs ship inside the `base` chart and are not duplicated under `crds/`.
+Istio CRDs ship inside the `base` chart and are not duplicated under `crds/`. They also cover the `DestinationRule` the router chart renders for `provider.name=istio`.
+
+| chart | source | sha256 (.tgz) |
+|---|---|---|
+| `llm-d-router-gateway-v1.0.0.tgz` | `oci://ghcr.io/llm-d/charts/llm-d-router-gateway` (OCI digest `sha256:0a16af45be7457acea1d5df2a3e2b7da7583ad65efcb30a65bbd6f2fd8f6ea4e`) | `ced5cbcf3ba336ff57c14e66a55c77ace1bd08525e2ce29c45026cb1a1254cc7` |
+| `lws-1.0.0.tgz` | `oci://registry.k8s.io/lws/charts/lws` (OCI digest `sha256:9444cfc199ab2aa775e683d9de64bcd903f825561d4bb0d99bb043f84423f2c8`) | `ea6cff664078688aeed8727afcb2e9cef481f3651919a3b49c0f6dfc50c9627b` |
+| `base-1.29.4.tgz` | https://istio-release.storage.googleapis.com/charts | `51a5470204f68a79eb44a70a8afc6d87193fe3418ba22e69c7abc05cbe489660` |
+| `istiod-1.29.4.tgz` | https://istio-release.storage.googleapis.com/charts | `b0c5bac432e4475d44fd42587227182b367cf48e98b7bbd96260bb40f54679e3` |
+
+**Image platforms.** Every image in `images.txt` is a multi-arch index (amd64 + arm64) except the AWS DLC vLLM image, which is amd64 only. The `gke/a4x` and `gke/a4xmax` overlays (GB200/GB300) pin `kubernetes.io/arch` to arm64, so mirror all platforms of each index, not just amd64. The digests in `images.txt` are index digests.
 
 ## Versions
 
@@ -50,6 +59,6 @@ Istio CRDs ship inside the `base` chart and are not duplicated under `crds/`.
 - **Sidecar tag.** The pd-disaggregation vLLM overlays use the `routing-sidecar/nightly` component, which renders `ghcr.io/llm-d/llm-d-router-disagg-sidecar:main` (digest at resolve time `sha256:d8d18cbd407a61ce5a7638201dfe9d2078ca37ecc8e57ea3b2a2681a509f60db`). `images.txt` carries `v1.0.0` (from the `release` component) instead, so the overlays' sidecar image must be replaced.
 - **vLLM version in release notes.** The model-server table lists vllm-openai `v0.30.0`; the overlays render `v0.31.0` (used here).
 - **Custom image placeholders.** The modelexpress-p2p overlays reference `<your-registry>/modelexpress-p2p-vllm:latest`; registry path and tag are yours to choose.
-- **Python version of the vLLM base image** is not verified. PyPI has `modelexpress==0.5.0` wheels for cp310-cp313 (manylinux x86_64/aarch64) and `google-crc32c==1.8.0` for cp39-cp314; mirror the wheels that match the base image.
+- **Custom image architecture.** If the ModelExpress image must run on arm64 nodes, build it for both platforms. `pip.txt` hashes cover both (Python 3.12, read from the base image build args `PYTHON_VERSION=3.12`).
 - **llm-d-pd-utils** is in `repos.md` per the release notes, but no rendered manifest references its image (`ghcr.io/llm-d/llm-d-pd-utils:v1.0.0` exists), so it is not in `images.txt`.
 - **Image verification** used `crane manifest <image>@<digest>`; skopeo was not available.

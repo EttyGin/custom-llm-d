@@ -1,2 +1,6 @@
-modelexpress==0.5.0
-google-crc32c==1.8.0
+modelexpress==0.5.0 \
+    --hash=sha256:0e9c6f3e278619054c97b8929b679699da09f3a555a1502f23d4bf01827e9d1d \
+    --hash=sha256:e8b5cfbd862a967c0cd22526715095da0825b9dbb0c60cd54b628b3c75d6e17f
+google-crc32c==1.8.0 \
+    --hash=sha256:14f87e04d613dfa218d6135e81b78272c3b904e2a7053b841481b38a7d901411 \
+    --hash=sha256:cb5c869c2923d56cb0c8e6bcdd73c009c36ae39b652dbe46a05eb4ef0ad01454
